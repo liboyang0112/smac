@@ -1,0 +1,64 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    namespace 'com.boyai.mqtt'
+    compileSdk 36
+
+    buildFeatures {
+        viewBinding true
+    }
+
+    defaultConfig {
+        applicationId "com.boyai.mqtt"
+        minSdk 34
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+    }
+
+    signingConfigs {
+        release {
+            storeFile file('../release-key.jks') // path to your keystore
+            storePassword 'asdasdqwe'
+            keyAlias 'my_release_key'
+            keyPassword 'asdasdqwe'
+        }
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    // Java toolchain settings for compilation
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
+    }
+
+    kotlinOptions {
+        jvmTarget = '21' // Kotlin on Android still uses 1.8
+    }
+}
+
+// Top-level kotlin block (correct location)
+kotlin {
+    jvmToolchain(21) // Tells Gradle to use JDK 21 for running tasks
+}
+
+dependencies {
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:2.2.21'
+    implementation 'androidx.core:core-ktx:1.13.1'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.5'
+    //implementation 'org.eclipse.paho:org.eclipse.paho.android.service:1.1.1'
+    implementation 'com.github.hannesa2:paho.mqtt.android:4.4.2'
+    implementation 'com.google.android.material:material:1.13.0'
+    implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.1.0'
+}
