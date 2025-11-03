@@ -29,14 +29,14 @@ Built with Kotlin, `MqttAndroidClient`, and foreground services to ensure reliab
 
 1. App connects to your MQTT broker (e.g., Mosquitto, EMQX, HiveMQ).
 2. Subscribes to a topic like `notifications/warning`.
-3. When a message arrives, it shows a high-priority notification.
+3. When a message arrives, it shows a default-priority notification.
 4. Runs in foreground with persistent notification to avoid being killed.
 
 ---
 
 ## 📄 License & Ownership
 
-This project is © 2025 Boyang.  
+This project is © 2025 Boyang Li.
 All rights reserved except as granted under the [Mozilla Public License 2.0 (MPL-2.0)](LICENSE).
 
 - ✅ You are free to use, modify, and distribute this app.
