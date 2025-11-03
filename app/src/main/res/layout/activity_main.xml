@@ -23,7 +23,7 @@
   android:id="@+id/editTextServerUri"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
-  android:hint="Server URI (e.g. tcp://home.boyai.cc:1883)" />
+  android:hint="Server URI (e.g. tcp://your.server:1883)" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Username -->
@@ -63,7 +63,7 @@
   android:id="@+id/editTextTopic"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
-  android:hint="Topic (e.g. notifications/boyang)" />
+  android:hint="Topic (e.g. notifications/#)" />
   </com.google.android.material.textfield.TextInputLayout>
 
   <!-- Connect / Disconnect Button -->

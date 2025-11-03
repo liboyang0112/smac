@@ -1,14 +1,14 @@
 package com.boyai.mqtt
-
+import com.boyai.mqtt.databinding.ActivityMainBinding
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import com.boyai.mqtt.databinding.ActivityMainBinding
+import com.google.android.material.textfield.TextInputEditText
+import android.util.Log
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,25 +22,19 @@ class MainActivity : AppCompatActivity() {
         loadSavedSettings()
 
         binding.buttonConnect.setOnClickListener {
-            val isConnected = binding.buttonConnect.text == "Disconnect"
-            if (isConnected) {
-                MqttForegroundService.disconnect(this)
-            } else {
-                saveSettingsAndConnect()
-            }
+            saveSettingsAndConnect()
         }
 
-        // Register receiver
         LocalBroadcastManager.getInstance(this)
             .registerReceiver(mqttStatusReceiver, IntentFilter("MQTT_STATUS_UPDATE"))
     }
 
     private fun loadSavedSettings() {
         val prefs = getSharedPreferences("mqtt_settings", Context.MODE_PRIVATE)
-        binding.editTextServerUri.setText(prefs.getString("server_uri", "tcp://home.boyai.cc:1883"))
-        binding.editTextUsername.setText(prefs.getString("username", "boyang"))
-        binding.editTextPassword.setText(prefs.getString("password", ""))
-        binding.editTextTopic.setText(prefs.getString("topic", "notifications/boyai"))
+        binding.editTextServerUri.setText(prefs.getString("server_uri", "tcp://your.server:1883"))
+        binding.editTextUsername.setText(prefs.getString("username", "user"))
+        binding.editTextPassword.setText(prefs.getString("password", "password"))
+        binding.editTextTopic.setText(prefs.getString("topic", "notifications/#"))
         Log.d("MainActivity", "Settings loaded")
     }
 
@@ -60,7 +54,7 @@ class MainActivity : AppCompatActivity() {
             .putString("username", username)
             .putString("password", password)
             .putString("topic", topic)
-            .commit()
+            .commit() // Sync write
 
         if (success) {
             Log.d("MainActivity", "Settings saved successfully")
@@ -89,9 +83,6 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         LocalBroadcastManager.getInstance(this)
             .registerReceiver(mqttStatusReceiver, IntentFilter("MQTT_STATUS_UPDATE"))
-
-        // Ask service for current status
-        MqttForegroundService.requestStatus(this)
     }
 
     override fun onPause() {

@@ -122,17 +122,17 @@ class MqttForegroundService : Service() {
 
     private fun loadSettings() {
         val prefs = getSharedPreferences("mqtt_settings", Context.MODE_PRIVATE)
-        serverUri = prefs.getString("server_uri", "tcp://home.boyai.cc:1883") ?: "tcp://home.boyai.cc:1883"
-        username = prefs.getString("username", "boyang") ?: "boyang"
-        password = prefs.getString("password", "asdasdqwe") ?: "asdasdqwe"
-        topic = prefs.getString("topic", "notifications/boyai") ?: "notifications/boyai"
+        serverUri = prefs.getString("server_uri", "tcp://your.server:1883") ?: "tcp://your.server:1883"
+        username = prefs.getString("username", "user") ?: "user"
+        password = prefs.getString("password", "password") ?: "password"
+        topic = prefs.getString("topic", "notifications/#") ?: "notifications/#"
         Log.d("MqttService", "Loaded settings - User: $username, Topic: $topic")
     }
 
     private fun connect() {
         if (::client.isInitialized && client.isConnected) return
 
-        val safePassword = password.ifBlank { "asdasdqwe" }
+        val safePassword = password.ifBlank { "password" }
 
         val options = MqttConnectOptions().apply {
             userName = username
