@@ -22,7 +22,11 @@ class MainActivity : AppCompatActivity() {
         loadSavedSettings()
 
         binding.buttonConnect.setOnClickListener {
-            saveSettingsAndConnect()
+            if (binding.buttonConnect.text == "Disconnect") {
+                MqttForegroundService.disconnect(this)
+            } else {
+                saveSettingsAndConnect()
+            }
         }
 
         LocalBroadcastManager.getInstance(this)
